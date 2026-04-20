@@ -1,5 +1,5 @@
-import 'package:expenses_tracker/views/expenses/widgets/expenses_view_body.dart';
 import 'package:flutter/material.dart';
+import 'package:expenses_tracker/views/expenses/widgets/expenses_view_body.dart';
 
 class ExpensesView extends StatefulWidget {
   const ExpensesView({super.key});

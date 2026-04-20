@@ -33,11 +33,17 @@ class ExpensesViewBody extends StatelessWidget {
         category: Category.work,
       ),
     ];
-    return CustomScrollView(
-      slivers: [
-        const SliverToBoxAdapter(child: Text('Welcome to Expenses Tracker!')),
-        ExpensesListBuilder(expenses: dummyExpenses),
+    return Column(
+      children: [
+        const Text('Welcome to Expenses Tracker!'),
+        Expanded(child: ExpensesListBuilder(expenses: dummyExpenses)),
       ],
     );
+    // CustomScrollView(
+    //   slivers: [
+    //     const SliverToBoxAdapter(child: Text('Welcome to Expenses Tracker!')),
+    //     ExpensesListBuilder(expenses: dummyExpenses),
+    //   ],
+    // );
   }
 }

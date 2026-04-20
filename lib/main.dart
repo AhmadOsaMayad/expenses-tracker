@@ -1,7 +1,6 @@
 import 'package:expenses_tracker/generated/l10n.dart';
-import 'package:flutter/material.dart';
-
 import 'package:expenses_tracker/views/expenses/expenses_view.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
