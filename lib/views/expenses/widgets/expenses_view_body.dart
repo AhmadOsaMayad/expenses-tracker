@@ -1,7 +1,8 @@
 import 'package:expenses_tracker/core/enums/category.dart';
 import 'package:expenses_tracker/models/expense_model.dart';
-import 'package:expenses_tracker/views/expenses/widgets/expenses_list_builder.dart';
 import 'package:flutter/material.dart';
+
+import 'expenses_list_builder.dart';
 
 class ExpensesViewBody extends StatelessWidget {
   const ExpensesViewBody({super.key});
