@@ -47,7 +47,7 @@ class ExpenseModel {
     CollectionsKeys.expenseTitle: title,
     CollectionsKeys.expenseAmount: amount,
     CollectionsKeys.expenseDate: DateHelpers.toDateTimeString(date),
-    CollectionsKeys.expenseCategory: category.name,
+    CollectionsKeys.expenseCategory: category.enName,
     CollectionsKeys.expenseCurrency: currency.init,
   };
 

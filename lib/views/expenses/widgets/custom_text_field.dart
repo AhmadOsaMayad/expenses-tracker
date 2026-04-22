@@ -21,7 +21,11 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: _textController,
       maxLength: maxLength,
-      decoration: InputDecoration(label: Text(title), prefixText: currencyInit),
+      decoration: InputDecoration(
+        label: Text(title, style: const TextStyle(fontSize: 14)),
+        suffixText: currencyInit,
+        suffixStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+      ),
       keyboardType: keyboardType,
     );
   }

@@ -1,3 +1,10 @@
 {
-    "expensesTracker":"صرفياتك"
+    "expensesTracker":"صرفياتك",
+    "newExpenseTitle":"عنوان الصرفية الجديدة",
+    "amount":"المبلغ",
+    "selectDate":"اختر تاريخ",
+    "category":"الصنف",
+    "currency":"العملة",
+    "saveExpense":"حفظ الصرفية",
+    "cancel":"إلغاء"
 }

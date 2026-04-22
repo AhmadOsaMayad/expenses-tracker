@@ -63,6 +63,56 @@ class S {
       args: [],
     );
   }
+
+  /// `New Expense's Title`
+  String get newExpenseTitle {
+    return Intl.message(
+      'New Expense\'s Title',
+      name: 'newExpenseTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message('Amount', name: 'amount', desc: '', args: []);
+  }
+
+  /// `Select a Date`
+  String get selectDate {
+    return Intl.message(
+      'Select a Date',
+      name: 'selectDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get category {
+    return Intl.message('Category', name: 'category', desc: '', args: []);
+  }
+
+  /// `Currency`
+  String get currency {
+    return Intl.message('Currency', name: 'currency', desc: '', args: []);
+  }
+
+  /// `Save Expense`
+  String get saveExpense {
+    return Intl.message(
+      'Save Expense',
+      name: 'saveExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

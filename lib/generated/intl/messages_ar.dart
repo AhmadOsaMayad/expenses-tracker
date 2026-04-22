@@ -22,6 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "amount": MessageLookupByLibrary.simpleMessage("المبلغ"),
+    "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "category": MessageLookupByLibrary.simpleMessage("الصنف"),
+    "currency": MessageLookupByLibrary.simpleMessage("العملة"),
     "expensesTracker": MessageLookupByLibrary.simpleMessage("صرفياتك"),
+    "newExpenseTitle": MessageLookupByLibrary.simpleMessage(
+      "عنوان الصرفية الجديدة",
+    ),
+    "saveExpense": MessageLookupByLibrary.simpleMessage("حفظ الصرفية"),
+    "selectDate": MessageLookupByLibrary.simpleMessage("اختر تاريخ"),
   };
 }

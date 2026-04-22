@@ -1,3 +1,10 @@
 {
-    "expensesTracker":"Expenses Tracker"
+    "expensesTracker":"Expenses Tracker",
+    "newExpenseTitle":"New Expense's Title",
+    "amount":"Amount",
+    "selectDate":"Select a Date",
+    "category":"Category",
+    "currency":"Currency",
+    "saveExpense":"Save Expense",
+    "cancel":"Cancel"
 }
