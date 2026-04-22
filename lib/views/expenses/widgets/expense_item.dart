@@ -1,15 +1,16 @@
-import 'package:expenses_tracker/models/expense_model.dart';
+import 'package:expenses_tracker/views/expenses/entities/expense_entity.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseItem extends StatelessWidget {
   const ExpenseItem({super.key, required this.expense});
 
-  final ExpenseModel expense;
+  final ExpenseEntity expense;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        leading: Icon(expense.category.icon),
         title: Text(expense.title),
         subtitle: Row(
           mainAxisSize: MainAxisSize.min,
@@ -19,10 +20,10 @@ class ExpenseItem extends StatelessWidget {
               child: Icon(Icons.alarm, color: Colors.grey[600], size: 16.0),
             ),
             const SizedBox(width: 4.0),
-            Text(expense.date.toString()),
+            Text(expense.formattedDate.toString()),
           ],
         ),
-        trailing: Text('\$${expense.amount.toStringAsFixed(2)}'),
+        trailing: Text('\$${expense.formattedAmount}'),
       ),
     );
   }
