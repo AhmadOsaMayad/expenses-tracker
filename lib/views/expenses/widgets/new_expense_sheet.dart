@@ -23,6 +23,38 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
   Category _selectedCategory = Category.values.first;
   Currency _selectedCurrency = Currency.usd;
 
+  Widget _buildDropdownField<T>({
+    required T selectedValue,
+    required String label,
+    required Widget prefix,
+    required List<T> values,
+    required String Function(T value) itemLabel,
+    required void Function(T value) onChanged,
+    TextStyle? itemTextStyle,
+  }) {
+    return DropdownButtonFormField<T>(
+      initialValue: selectedValue,
+      decoration: InputDecoration(label: Text(label), prefix: prefix),
+      items: values
+          .map(
+            (value) => DropdownMenuItem<T>(
+              value: value,
+              child: Row(
+                children: [
+                  const SizedBox(width: 16),
+                  Text(itemLabel(value), style: itemTextStyle),
+                ],
+              ),
+            ),
+          )
+          .toList(),
+      onChanged: (value) {
+        if (value == null) return;
+        onChanged(value);
+      },
+    );
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -115,36 +147,14 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
             children: [
               Expanded(
                 flex: 5,
-                child: DropdownButtonFormField<Category>(
-                  initialValue: _selectedCategory,
-                  decoration: InputDecoration(
-                    label: Text(S.of(context).category),
-                    prefix: Icon(_selectedCategory.icon, size: 16),
-                    // border: const OutlineInputBorder(
-                    //   borderSide: BorderSide(style: BorderStyle.none, width: 0),
-                    // ),
-                    // contentPadding: const EdgeInsets.symmetric(
-                    //   horizontal: 12,
-                    //   vertical: 10,
-                    // ),
-                  ),
-                  items: Category.values
-                      .map(
-                        (category) => DropdownMenuItem<Category>(
-                          value: category,
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              Text(
-                                isArabic() ? category.arName : category.enName,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
+                child: _buildDropdownField<Category>(
+                  selectedValue: _selectedCategory,
+                  label: S.of(context).category,
+                  prefix: Icon(_selectedCategory.icon, size: 16),
+                  values: Category.values,
+                  itemLabel: (category) =>
+                      isArabic() ? category.arName : category.enName,
                   onChanged: (value) {
-                    if (value == null) return;
                     setState(() {
                       _selectedCategory = value;
                     });
@@ -154,40 +164,18 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
               const SizedBox(width: 25),
               Expanded(
                 flex: 4,
-                child: DropdownButtonFormField<Currency>(
-                  initialValue: _selectedCurrency,
-                  decoration: InputDecoration(
-                    label: Text(S.of(context).currency),
-                    prefix: Icon(
-                      FontAwesomeIcons.handHoldingDollar.data,
-                      size: 16,
-                    ),
-                    // border: const OutlineInputBorder(
-                    //   borderSide: BorderSide(style: BorderStyle.none, width: 0),
-                    // ),
-                    // contentPadding: const EdgeInsets.symmetric(
-                    //   horizontal: 12,
-                    //   vertical: 10,
-                    // ),
+                child: _buildDropdownField<Currency>(
+                  selectedValue: _selectedCurrency,
+                  label: S.of(context).currency,
+                  prefix: Icon(
+                    FontAwesomeIcons.handHoldingDollar.data,
+                    size: 16,
                   ),
-                  items: Currency.values
-                      .map(
-                        (currency) => DropdownMenuItem<Currency>(
-                          value: currency,
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              Text(
-                                isArabic() ? currency.arName : currency.enName,
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                      .toList(),
+                  values: Currency.values,
+                  itemLabel: (currency) =>
+                      isArabic() ? currency.arName : currency.enName,
+                  itemTextStyle: const TextStyle(fontSize: 14),
                   onChanged: (value) {
-                    if (value == null) return;
                     setState(() {
                       _selectedCurrency = value;
                     });
