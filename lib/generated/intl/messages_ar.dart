@@ -22,11 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "ExpensesListIsEmpty": MessageLookupByLibrary.simpleMessage(
+      "قائمة الصرفيات فارغة! حاول إضافة بعض الصرفيات واستمتع بحياتك!",
+    ),
     "amount": MessageLookupByLibrary.simpleMessage("المبلغ"),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "category": MessageLookupByLibrary.simpleMessage("الصنف"),
     "currency": MessageLookupByLibrary.simpleMessage("العملة"),
     "expensesTracker": MessageLookupByLibrary.simpleMessage("صرفياتك"),
+    "hasBeenDeleted": MessageLookupByLibrary.simpleMessage("تم حذفه."),
     "invalidDataMsg": MessageLookupByLibrary.simpleMessage(
       "البيانات التي أدخلتها غير صالحة. يرجى التحقق من القيم التي أدخلتها وحاول مرة أخرى.",
     ),
@@ -37,5 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "saveExpense": MessageLookupByLibrary.simpleMessage("حفظ الصرفية"),
     "selectDate": MessageLookupByLibrary.simpleMessage("اختر تاريخ"),
     "sorry": MessageLookupByLibrary.simpleMessage("عذراً!"),
+    "theItem": MessageLookupByLibrary.simpleMessage("العنصر"),
+    "undo": MessageLookupByLibrary.simpleMessage("تراجع"),
   };
 }

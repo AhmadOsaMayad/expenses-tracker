@@ -133,6 +133,36 @@ class S {
   String get ok {
     return Intl.message('OK', name: 'ok', desc: '', args: []);
   }
+
+  /// `The item`
+  String get theItem {
+    return Intl.message('The item', name: 'theItem', desc: '', args: []);
+  }
+
+  /// `has been deleted.`
+  String get hasBeenDeleted {
+    return Intl.message(
+      'has been deleted.',
+      name: 'hasBeenDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Undo`
+  String get undo {
+    return Intl.message('Undo', name: 'undo', desc: '', args: []);
+  }
+
+  /// `Expenses List is Empty! Try Adding some and Enjoy Your Life!`
+  String get ExpensesListIsEmpty {
+    return Intl.message(
+      'Expenses List is Empty! Try Adding some and Enjoy Your Life!',
+      name: 'ExpensesListIsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

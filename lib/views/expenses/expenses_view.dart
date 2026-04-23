@@ -60,9 +60,27 @@ class _ExpensesViewState extends State<ExpensesView> {
   }
 
   void _removeExpense(ExpenseModel expense) {
+    final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
       _registeredExpenses.remove(expense);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${S.of(context).theItem} ${expense.title} ${S.of(context).hasBeenDeleted}',
+        ),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: S.of(context).undo,
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void _openAddExpenseOverlay() async {
@@ -78,6 +96,21 @@ class _ExpensesViewState extends State<ExpensesView> {
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = Center(
+      child: SizedBox(
+        width: 300,
+        child: Text(
+          textAlign: TextAlign.center,
+          S.of(context).ExpensesListIsEmpty,
+        ),
+      ),
+    );
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesViewBody(
+        onDismissed: _removeExpense,
+        expenses: _registeredExpenses,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).expensesTracker),
@@ -88,10 +121,7 @@ class _ExpensesViewState extends State<ExpensesView> {
           ),
         ],
       ),
-      body: ExpensesViewBody(
-        onDismissed: _removeExpense,
-        expenses: _registeredExpenses, //.map((e) => e.toEntity()).toList(),
-      ),
+      body: mainContent,
     );
   }
 }
