@@ -143,112 +143,123 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsGeometry.all(16),
-      child: Column(
-        children: [
-          CustomTextField(
-            textController: _titleController,
-            maxLength: 50,
-            title: S.of(context).newExpenseTitle,
-          ),
-          Row(
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 150),
+      padding: EdgeInsetsGeometry.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
+          child: Column(
             children: [
-              Expanded(
-                flex: 3,
-                child: CustomTextField(
-                  textController: _amountController,
-                  maxLength: 9,
-                  title: S.of(context).amount,
-                  currencyInit: '${_selectedCurrency.init} ',
-                  keyboardType: TextInputType.number,
-                ),
+              CustomTextField(
+                textController: _titleController,
+                maxLength: 50,
+                title: S.of(context).newExpenseTitle,
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 4,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: _onSelectDate,
-                      child: Text(
-                        _selectedDateTime == null
-                            ? S.of(context).selectDate
-                            : DateFormat.yMd().add_jm().format(
-                                _selectedDateTime!,
-                              ),
-                      ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: CustomTextField(
+                      textController: _amountController,
+                      maxLength: 9,
+                      title: S.of(context).amount,
+                      currencyInit: '${_selectedCurrency.init} ',
+                      keyboardType: TextInputType.number,
                     ),
-                    const Icon(Icons.calendar_today),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                flex: 5,
-                child: _buildDropdownField<Category>(
-                  selectedValue: _selectedCategory,
-                  label: S.of(context).category,
-                  prefix: Icon(_selectedCategory.icon, size: 16),
-                  values: Category.values,
-                  itemLabel: (category) =>
-                      isArabic() ? category.arName : category.enName,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(width: 25),
-              Expanded(
-                flex: 4,
-                child: _buildDropdownField<Currency>(
-                  selectedValue: _selectedCurrency,
-                  label: S.of(context).currency,
-                  prefix: Icon(
-                    FontAwesomeIcons.handHoldingDollar.data,
-                    size: 16,
                   ),
-                  values: Currency.values,
-                  itemLabel: (currency) =>
-                      isArabic() ? currency.arName : currency.enName,
-                  itemTextStyle: const TextStyle(fontSize: 14),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedCurrency = value;
-                    });
-                  },
-                ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: _onSelectDate,
+                          child: Text(
+                            _selectedDateTime == null
+                                ? S.of(context).selectDate
+                                : DateFormat.yMd().add_jm().format(
+                                    _selectedDateTime!,
+                                  ),
+                          ),
+                        ),
+                        const Icon(Icons.calendar_today),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: _buildDropdownField<Category>(
+                      selectedValue: _selectedCategory,
+                      label: S.of(context).category,
+                      prefix: Icon(_selectedCategory.icon, size: 16),
+                      values: Category.values,
+                      itemLabel: (category) =>
+                          isArabic() ? category.arName : category.enName,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategory = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 25),
+                  Expanded(
+                    flex: 4,
+                    child: _buildDropdownField<Currency>(
+                      selectedValue: _selectedCurrency,
+                      label: S.of(context).currency,
+                      prefix: Icon(
+                        FontAwesomeIcons.handHoldingDollar.data,
+                        size: 16,
+                      ),
+                      values: Currency.values,
+                      itemLabel: (currency) =>
+                          isArabic() ? currency.arName : currency.enName,
+                      itemTextStyle: const TextStyle(fontSize: 14),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCurrency = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 64),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(S.of(context).cancel),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (!_submitExpenseData()) return;
+                      Navigator.of(context).pop(_newExpense);
+                    },
+                    child: Text(S.of(context).saveExpense),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 64),
             ],
           ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(S.of(context).cancel),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (!_submitExpenseData()) return;
-                  Navigator.of(context).pop(_newExpense);
-                },
-                child: Text(S.of(context).saveExpense),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

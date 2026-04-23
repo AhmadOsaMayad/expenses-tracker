@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ExpenseItem extends StatelessWidget {
   const ExpenseItem({super.key, required this.expense});
 
+  // final ExpenseModel expense;
   final ExpenseEntity expense;
 
   @override
@@ -21,6 +22,7 @@ class ExpenseItem extends StatelessWidget {
             ),
             const SizedBox(width: 4.0),
             Text(expense.formattedDate.toString()),
+            // Text(expense.toEntity().formattedDate.toString()),
           ],
         ),
         trailing: Text('\$${expense.formattedAmount}'),
