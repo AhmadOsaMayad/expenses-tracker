@@ -6,5 +6,8 @@
     "category":"Category",
     "currency":"Currency",
     "saveExpense":"Save Expense",
-    "cancel":"Cancel"
+    "cancel":"Cancel",
+    "sorry":"Sorry!",
+    "invalidDataMsg":"The data you entered is invalid. Please check the values you have entered and try again.",
+    "ok":"OK"
 }

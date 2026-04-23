@@ -113,6 +113,26 @@ class S {
   String get cancel {
     return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
+
+  /// `Sorry!`
+  String get sorry {
+    return Intl.message('Sorry!', name: 'sorry', desc: '', args: []);
+  }
+
+  /// `The data you entered is invalid. Please check the values you have entered and try again.`
+  String get invalidDataMsg {
+    return Intl.message(
+      'The data you entered is invalid. Please check the values you have entered and try again.',
+      name: 'invalidDataMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message('OK', name: 'ok', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

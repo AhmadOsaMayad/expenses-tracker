@@ -27,10 +27,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "category": MessageLookupByLibrary.simpleMessage("Category"),
     "currency": MessageLookupByLibrary.simpleMessage("Currency"),
     "expensesTracker": MessageLookupByLibrary.simpleMessage("Expenses Tracker"),
+    "invalidDataMsg": MessageLookupByLibrary.simpleMessage(
+      "The data you entered is invalid. Please check the values you have entered and try again.",
+    ),
     "newExpenseTitle": MessageLookupByLibrary.simpleMessage(
       "New Expense\'s Title",
     ),
+    "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "saveExpense": MessageLookupByLibrary.simpleMessage("Save Expense"),
     "selectDate": MessageLookupByLibrary.simpleMessage("Select a Date"),
+    "sorry": MessageLookupByLibrary.simpleMessage("Sorry!"),
   };
 }

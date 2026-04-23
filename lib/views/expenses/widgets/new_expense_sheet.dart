@@ -4,6 +4,8 @@ import 'package:expenses_tracker/core/enums/category.dart';
 import 'package:expenses_tracker/core/enums/currency.dart';
 import 'package:expenses_tracker/core/helpers/is_arabic.dart';
 import 'package:expenses_tracker/generated/l10n.dart';
+import 'package:expenses_tracker/models/expense_model.dart';
+import 'package:expenses_tracker/views/expenses/entities/expense_entity.dart';
 import 'package:expenses_tracker/views/expenses/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,6 +24,7 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
   DateTime? _selectedDateTime;
   Category _selectedCategory = Category.values.first;
   Currency _selectedCurrency = Currency.usd;
+  ExpenseModel? _newExpense;
 
   Widget _buildDropdownField<T>({
     required T selectedValue,
@@ -96,6 +99,45 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
     }
   }
 
+  bool _isUnValidDatat() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsUnValid = enteredAmount == null || enteredAmount <= 0
+        ? true
+        : false;
+    final titleIsUnValid = _titleController.text.trim().isEmpty;
+    final dateIsUnValid = _selectedDateTime == null ? true : false;
+    final isItUnValid = amountIsUnValid || titleIsUnValid || dateIsUnValid;
+
+    return isItUnValid;
+  }
+
+  Future<ExpenseModel?> _submitExpenseData() async {
+    if (_isUnValidDatat()) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(S.of(context).sorry),
+          content: Text(S.of(context).invalidDataMsg),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(S.of(context).ok),
+            ),
+          ],
+        ),
+      );
+      return null;
+    }
+    _newExpense = ExpenseModel(
+      title: _titleController.text,
+      amount: double.parse(_amountController.text),
+      date: _selectedDateTime!,
+      category: _selectedCategory,
+      currency: _selectedCurrency,
+    );
+    return _newExpense;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -123,10 +165,9 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
               Expanded(
                 flex: 4,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.calendar_today),
                     TextButton(
                       onPressed: _onSelectDate,
                       child: Text(
@@ -137,6 +178,7 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
                               ),
                       ),
                     ),
+                    const Icon(Icons.calendar_today),
                   ],
                 ),
               ),
@@ -184,7 +226,7 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -195,9 +237,14 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
                 child: Text(S.of(context).cancel),
               ),
               ElevatedButton(
-                onPressed: () {
-                  log(_titleController.text);
-                  log(_amountController.text);
+                onPressed: () async {
+                  if (await _submitExpenseData() == null) return;
+                  ExpenseEntity newExpenseEntity = _newExpense!.toEntity();
+                  log('New expense created: $newExpenseEntity');
+                  await Future.delayed(const Duration(seconds: 1));
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
                 },
                 child: Text(S.of(context).saveExpense),
               ),

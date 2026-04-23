@@ -22,4 +22,9 @@ class ExpenseEntity {
 
   String get formattedAmount => amount.toStringAsFixed(2);
   String get formattedDate => formatter.format(date);
+
+  @override
+  String toString() {
+    return 'ExpenseEntity(id: $id, title: $title, amount: $amount, date: $date, category: ${category.enName}, currency: ${currency.init})';
+  }
 }

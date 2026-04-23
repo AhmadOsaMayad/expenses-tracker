@@ -27,10 +27,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "category": MessageLookupByLibrary.simpleMessage("الصنف"),
     "currency": MessageLookupByLibrary.simpleMessage("العملة"),
     "expensesTracker": MessageLookupByLibrary.simpleMessage("صرفياتك"),
+    "invalidDataMsg": MessageLookupByLibrary.simpleMessage(
+      "البيانات التي أدخلتها غير صالحة. يرجى التحقق من القيم التي أدخلتها وحاول مرة أخرى.",
+    ),
     "newExpenseTitle": MessageLookupByLibrary.simpleMessage(
       "عنوان الصرفية الجديدة",
     ),
+    "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
     "saveExpense": MessageLookupByLibrary.simpleMessage("حفظ الصرفية"),
     "selectDate": MessageLookupByLibrary.simpleMessage("اختر تاريخ"),
+    "sorry": MessageLookupByLibrary.simpleMessage("عذراً!"),
   };
 }
