@@ -18,14 +18,16 @@ class ExpenseModel {
   // final formatter = DateFormat.yMd();
 
   ExpenseModel({
+    required this.id,
     this.currency = Currency.usd,
     required this.title,
     required this.amount,
     required this.date,
     required this.category,
-  }) : id = uuid.v4();
+  });
 
   factory ExpenseModel.fromEntity(ExpenseEntity entity) => ExpenseModel(
+    id: entity.id,
     title: entity.title,
     amount: entity.amount,
     date: entity.date,
