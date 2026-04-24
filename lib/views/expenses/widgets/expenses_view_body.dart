@@ -1,4 +1,5 @@
 import 'package:expenses_tracker/models/expense_model.dart';
+import 'package:expenses_tracker/views/expenses/widgets/chart.dart';
 import 'package:flutter/material.dart';
 
 import 'expenses_list_builder.dart';
@@ -15,7 +16,11 @@ class ExpensesViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text('Welcome to Expenses Tracker!'),
+        // Text(
+        //   'Welcome to Expenses Tracker!',
+        //   style: Theme.of(context).textTheme.titleLarge,
+        // ),
+        Chart(expenses: expenses),
         Expanded(
           child: ExpensesListBuilder(
             onDismissed: onDismissed,

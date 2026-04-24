@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       theme: ThemeData().copyWith(
-        scaffoldBackgroundColor: kDarkColorScheme.onInverseSurface,
+        // scaffoldBackgroundColor: kDarkColorScheme.onInverseSurface,
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
           backgroundColor: kColorScheme.onPrimaryContainer,
@@ -52,20 +52,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: kColorScheme.primaryContainer,
           ),
         ),
-        // textTheme: ThemeData().textTheme.copyWith(
-        //   labelLarge:
-        //       // ThemeData().textTheme.titleLarge?.copyWith(),
-        //       //or from scratch
-        //       TextStyle(
-        //         color: kColorScheme.onPrimaryContainer,
-        //         fontWeight: FontWeight.bold,
-        //         fontSize: 16,
-        //       ),
-        // ),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
-      locale: const Locale('en'),
+      locale: const Locale('ar'),
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
