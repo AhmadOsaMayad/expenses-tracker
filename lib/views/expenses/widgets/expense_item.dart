@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class ExpenseItem extends StatelessWidget {
   const ExpenseItem({super.key, required this.expense});
 
-  // final ExpenseModel expense;
   final ExpenseEntity expense;
 
   @override
@@ -12,17 +11,22 @@ class ExpenseItem extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: Icon(expense.category.icon),
-        title: Text(expense.title),
+        title: Text(
+          expense.title,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
         subtitle: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Icon(Icons.alarm, color: Colors.grey[600], size: 16.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: Icon(
+                Icons.alarm,
+                size: 16.0,
+              ), //color: Colors.grey[600], size: 16.0),
             ),
             const SizedBox(width: 4.0),
             Text(expense.formattedDate.toString()),
-            // Text(expense.toEntity().formattedDate.toString()),
           ],
         ),
         trailing: Text('\$${expense.formattedAmount}'),

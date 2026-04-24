@@ -46,7 +46,7 @@ class _ExpensesViewState extends State<ExpensesView> {
       id: uuid.v4(),
       title: 'Laptop Purchase',
       amount: 1200.00,
-      date: DateTime.now(), //(2026, 2, 15),
+      date: DateTime.now(),
       category: Category.work,
       currency: Currency.usd,
     ),
@@ -67,6 +67,7 @@ class _ExpensesViewState extends State<ExpensesView> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        showCloseIcon: true,
         content: Text(
           '${S.of(context).theItem} ${expense.title} ${S.of(context).hasBeenDeleted}',
         ),

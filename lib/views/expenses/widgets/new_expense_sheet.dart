@@ -150,7 +150,7 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
       ),
 
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: SingleChildScrollView(
           // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
           child: Column(
@@ -189,7 +189,7 @@ class _NewExpenseSheetState extends State<NewExpenseSheet> {
                                   ),
                           ),
                         ),
-                        const Icon(Icons.calendar_today),
+                        const Icon(Icons.calendar_today, size: 16),
                       ],
                     ),
                   ),
