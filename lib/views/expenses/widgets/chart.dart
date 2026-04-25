@@ -10,18 +10,11 @@ class Chart extends StatelessWidget {
   final List<ExpenseModel> expenses;
 
   List<ExpenseBucketModel> get buckets {
-    return [
-      ExpenseBucketModel.forCategory(expenses, Category.food),
-      ExpenseBucketModel.forCategory(expenses, Category.leisure),
-      ExpenseBucketModel.forCategory(expenses, Category.travel),
-      ExpenseBucketModel.forCategory(expenses, Category.bills),
-      ExpenseBucketModel.forCategory(expenses, Category.deposits),
-      ExpenseBucketModel.forCategory(expenses, Category.donations),
-      ExpenseBucketModel.forCategory(expenses, Category.medications),
-      ExpenseBucketModel.forCategory(expenses, Category.others),
-      ExpenseBucketModel.forCategory(expenses, Category.outgoings),
-      ExpenseBucketModel.forCategory(expenses, Category.transportation),
-    ];
+    if (expenses.isEmpty) return [];
+    var buckets = Category.values
+        .map((category) => ExpenseBucketModel.forCategory(expenses, category))
+        .toList();
+    return buckets;
   }
 
   double get maxTotalExpense {
@@ -40,6 +33,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -56,43 +50,47 @@ class Chart extends StatelessWidget {
           end: Alignment.topCenter,
         ),
       ),
-      child: Column(
-        children: [
-          Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                for (final bucket in buckets) // alternative to map()
-                  ChartBar(
-                    fill: bucket.totalExpenses == 0
-                        ? 0
-                        : bucket.totalExpenses / maxTotalExpense,
-                  ),
-              ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  for (final bucket in buckets)
+                    ChartBar(
+                      fill: bucket.totalExpenses == 0
+                          ? 0
+                          : bucket.totalExpenses / maxTotalExpense,
+                      width: 40,
+                    ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: buckets
-                .map(
-                  (bucket) => Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Icon(
-                        // categoryIcons[bucket.category],
-                        bucket.category.icon,
-                        color: isDarkMode
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(
-                                context,
-                              ).colorScheme.primary.withAlpha(179),
+            const SizedBox(height: 12),
+            Row(
+              children: buckets
+                  .map(
+                    (bucket) => SizedBox(
+                      width: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Icon(
+                          bucket.category.icon,
+                          color: isDarkMode
+                              ? Theme.of(context).colorScheme.secondary
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.primary.withAlpha(179),
+                        ),
                       ),
                     ),
-                  ),
-                )
-                .toList(),
-          ),
-        ],
+                  )
+                  .toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

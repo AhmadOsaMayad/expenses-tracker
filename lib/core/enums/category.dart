@@ -27,7 +27,12 @@ enum Category {
     arName: 'تبرعات',
     icon: Icons.volunteer_activism,
   ),
-  others(enName: 'Others', arName: 'أخرى', icon: Icons.category);
+  others(enName: 'Others', arName: 'أخرى', icon: Icons.category),
+  loaning(enName: 'Loaning', arName: 'إقراض', icon: Icons.handshake),
+  rental(enName: 'Rental', arName: 'إيجار', icon: Icons.home),
+  fines(enName: 'Fines', arName: 'غرامات', icon: Icons.warning_amber_outlined),
+  taxes(enName: 'Taxes', arName: 'ضرائب', icon: Icons.account_balance),
+  gifts(enName: 'Gifts', arName: 'هدايا', icon: Icons.card_giftcard_sharp);
 
   final String enName, arName;
   final IconData icon;

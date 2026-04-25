@@ -16,10 +16,6 @@ class ExpensesViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Text(
-        //   'Welcome to Expenses Tracker!',
-        //   style: Theme.of(context).textTheme.titleLarge,
-        // ),
         Chart(expenses: expenses),
         Expanded(
           child: ExpensesListBuilder(

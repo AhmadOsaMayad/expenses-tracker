@@ -1,12 +1,10 @@
 import 'dart:developer';
-
 import 'package:expenses_tracker/core/enums/category.dart';
 import 'package:expenses_tracker/core/enums/currency.dart';
 import 'package:expenses_tracker/generated/l10n.dart';
 import 'package:expenses_tracker/models/expense_model.dart';
 import 'package:expenses_tracker/views/expenses/widgets/new_expense_sheet.dart';
 import 'package:flutter/material.dart';
-
 import 'widgets/expenses_view_body.dart';
 
 class ExpensesView extends StatefulWidget {

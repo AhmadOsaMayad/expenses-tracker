@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
-  const ChartBar({super.key, required this.fill});
+  const ChartBar({super.key, required this.fill, this.width = 40});
 
   final double fill;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return Expanded(
+
+    return SizedBox(
+      width: width,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: FractionallySizedBox(
+          alignment: Alignment.bottomCenter,
           heightFactor: fill,
           child: DecoratedBox(
             decoration: BoxDecoration(

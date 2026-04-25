@@ -1,21 +1,17 @@
+import 'package:expenses_tracker/core/constants/app_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/l10n.dart';
 import 'views/expenses/expenses_view.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
+  //   fn,
+  // ) {
   runApp(const MyApp());
+  // });
 }
-
-var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 96, 59, 181),
-  // seedColor: const Color.fromARGB(255, 96, 86, 121),
-);
-var kDarkColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 5, 99, 125),
-  brightness: Brightness.dark,
-  // seedColor: const Color.fromARGB(255, 96, 86, 121),
-);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -53,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       locale: const Locale('ar'),
       localizationsDelegates: const [
