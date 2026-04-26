@@ -1,8 +1,6 @@
 import 'package:expenses_tracker/models/expense_model.dart';
-import 'package:expenses_tracker/views/expenses/widgets/chart.dart';
+import 'package:expenses_tracker/views/expenses/widgets/expense_view_body_layout_builder.dart';
 import 'package:flutter/material.dart';
-
-import 'expenses_list_builder.dart';
 
 class ExpensesViewBody extends StatelessWidget {
   const ExpensesViewBody({
@@ -14,16 +12,9 @@ class ExpensesViewBody extends StatelessWidget {
   final void Function(ExpenseModel) onDismissed;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Chart(expenses: expenses),
-        Expanded(
-          child: ExpensesListBuilder(
-            onDismissed: onDismissed,
-            expenses: expenses,
-          ),
-        ),
-      ],
+    return ExpenseViewBodyLayoutBuilder(
+      expenses: expenses,
+      onDismissed: onDismissed,
     );
   }
 }

@@ -1,9 +1,8 @@
 import 'dart:developer';
-import 'package:expenses_tracker/core/enums/category.dart';
-import 'package:expenses_tracker/core/enums/currency.dart';
+import 'package:expenses_tracker/core/constants/app_consts.dart';
 import 'package:expenses_tracker/generated/l10n.dart';
 import 'package:expenses_tracker/models/expense_model.dart';
-import 'package:expenses_tracker/views/expenses/widgets/new_expense_sheet.dart';
+import 'package:expenses_tracker/views/new_expense/new_expense_sheet.dart';
 import 'package:flutter/material.dart';
 import 'widgets/expenses_view_body.dart';
 
@@ -15,63 +14,39 @@ class ExpensesView extends StatefulWidget {
 }
 
 class _ExpensesViewState extends State<ExpensesView> {
-  final List<ExpenseModel> _registeredExpenses = [
-    ExpenseModel(
-      id: uuid.v4(),
-      title: 'Pizza Dinner',
-      amount: 15.99,
-      date: DateTime(2026, 4, 10, 20, 30),
-      category: Category.food,
-      currency: Currency.usd,
-    ),
-    ExpenseModel(
-      id: uuid.v4(),
-      title: 'Flight to Cairo',
-      amount: 250.00,
-      date: DateTime(2026, 3, 28, 15, 45),
-      category: Category.travel,
-      currency: Currency.usd,
-    ),
-    ExpenseModel(
-      id: uuid.v4(),
-      title: 'Movie Night',
-      amount: 12.50,
-      date: DateTime(2026, 4, 5, 20, 30),
-      category: Category.leisure,
-      currency: Currency.usd,
-    ),
-    ExpenseModel(
-      id: uuid.v4(),
-      title: 'Laptop Purchase',
-      amount: 1200.00,
-      date: DateTime.now(),
-      category: Category.work,
-      currency: Currency.usd,
-    ),
-  ];
+  final List<ExpenseModel> _registeredExpenses = [];
+  @override
+  void initState() {
+    super.initState();
+    for (var expn in kDummyExpenses) {
+      _registeredExpenses.add(expn);
+    }
+  }
 
   void _addNewExpense(ExpenseModel expense) {
     setState(() {
       _registeredExpenses.add(expense);
-      // _registeredExpenses.add(expense.toEntity());
     });
   }
 
   void _removeExpense(ExpenseModel expense) {
     final expenseIndex = _registeredExpenses.indexOf(expense);
+    final sText = S.of(context);
+    final scafMsg = ScaffoldMessenger.of(context);
+
     setState(() {
       _registeredExpenses.remove(expense);
     });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
+    scafMsg.clearSnackBars();
+    scafMsg.showSnackBar(
       SnackBar(
         showCloseIcon: true,
         content: Text(
-          '${S.of(context).theItem} ${expense.title} ${S.of(context).hasBeenDeleted}',
+          '${sText.theItem} ${expense.title} ${sText.hasBeenDeleted}',
         ),
         duration: const Duration(seconds: 3),
         action: SnackBarAction(
-          label: S.of(context).undo,
+          label: sText.undo,
           onPressed: () {
             setState(() {
               _registeredExpenses.insert(expenseIndex, expense);
@@ -84,6 +59,10 @@ class _ExpensesViewState extends State<ExpensesView> {
 
   void _openAddExpenseOverlay() async {
     ExpenseModel? expense = await showModalBottomSheet(
+      isScrollControlled: true,
+      showDragHandle: true,
+      useSafeArea: true,
+      // context: Navigator.of(context, rootNavigator: true).context,
       context: context,
       builder: (ctx) => const NewExpenseSheet(),
     );
