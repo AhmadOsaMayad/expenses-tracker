@@ -2,6 +2,7 @@ import 'package:expenses_tracker/core/enums/category.dart';
 import 'package:expenses_tracker/models/expense_bucket_model.dart';
 import 'package:expenses_tracker/models/expense_model.dart';
 import 'package:expenses_tracker/views/expenses/widgets/chart_bar.dart';
+import 'package:expenses_tracker/views/expenses/widgets/chart_button.dart';
 import 'package:flutter/material.dart';
 
 class Chart extends StatelessWidget {
@@ -9,14 +10,13 @@ class Chart extends StatelessWidget {
 
   final List<ExpenseModel> expenses;
 
+  //gets List of buckets. Each bucket contains expenses of a specific category.
   List<ExpenseBucketModel> get buckets {
     if (expenses.isEmpty) return [];
-    var buckets = Category.values
-        .map((category) => ExpenseBucketModel.forCategory(expenses, category))
-        .toList();
-    return buckets;
+    return _getBucketList(expenses);
   }
 
+  //gets the highest bucket total expense.
   double get maxTotalExpense {
     double maxTotalExpense = 0;
 
@@ -31,25 +31,16 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+    final primary = colorScheme.primary;
+    final secondary = colorScheme.secondary;
 
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       width: double.infinity,
       height: 180,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.primary.withAlpha(77),
-            Theme.of(context).colorScheme.primary.withAlpha(255),
-          ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-        ),
-      ),
+      decoration: _chartBox(primary),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Column(
@@ -59,12 +50,7 @@ class Chart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   for (final bucket in buckets)
-                    ChartBar(
-                      fill: bucket.totalExpenses == 0
-                          ? 0
-                          : bucket.totalExpenses / maxTotalExpense,
-                      width: 40,
-                    ),
+                    ChartBar(fill: _chartBarFill(bucket)),
                 ],
               ),
             ),
@@ -74,16 +60,10 @@ class Chart extends StatelessWidget {
                   .map(
                     (bucket) => SizedBox(
                       width: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Icon(
-                          bucket.category.icon,
-                          color: isDarkMode
-                              ? Theme.of(context).colorScheme.secondary
-                              : Theme.of(
-                                  context,
-                                ).colorScheme.primary.withAlpha(179),
-                        ),
+                      child: ChartButton(
+                        iconData: bucket.category.icon,
+                        secondary: secondary,
+                        primary: primary,
                       ),
                     ),
                   )
@@ -94,4 +74,27 @@ class Chart extends StatelessWidget {
       ),
     );
   }
+
+  double _chartBarFill(ExpenseBucketModel bucket) {
+    final max = maxTotalExpense;
+    if (max <= 0) return 0.0;
+    return bucket.totalExpenses / max;
+  }
+
+  BoxDecoration _chartBox(Color color) {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(8),
+      gradient: LinearGradient(
+        colors: [color.withAlpha(77), color.withAlpha(255)],
+        begin: Alignment.bottomCenter,
+        end: Alignment.topCenter,
+      ),
+    );
+  }
+}
+
+List<ExpenseBucketModel> _getBucketList(List<ExpenseModel> expenses) {
+  return Category.values
+      .map((category) => ExpenseBucketModel.forCategory(expenses, category))
+      .toList();
 }

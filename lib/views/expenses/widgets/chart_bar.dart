@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/extensions/is_dark_mode.dart';
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
@@ -8,8 +9,9 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDarkMode = context.isDarkMode;
+    // MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
       width: width,
@@ -25,8 +27,8 @@ class ChartBar extends StatelessWidget {
                 top: Radius.circular(8),
               ),
               color: isDarkMode
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.primary.withAlpha(150),
+                  ? colorScheme.secondary
+                  : colorScheme.primary.withAlpha(150),
             ),
           ),
         ),

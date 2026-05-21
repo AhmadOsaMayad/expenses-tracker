@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:expenses_tracker/core/constants/app_consts.dart';
 import 'package:expenses_tracker/generated/l10n.dart';
 import 'package:expenses_tracker/models/expense_model.dart';
+import 'package:expenses_tracker/views/expenses/widgets/main_content_widget.dart';
 import 'package:expenses_tracker/views/new_expense/new_expense_sheet.dart';
 import 'package:flutter/material.dart';
 import 'widgets/expenses_view_body.dart';
@@ -57,15 +58,18 @@ class _ExpensesViewState extends State<ExpensesView> {
     );
   }
 
-  void _openAddExpenseOverlay() async {
-    ExpenseModel? expense = await showModalBottomSheet(
+  Future<ExpenseModel?> _showAddExpenseSheet() {
+    return showModalBottomSheet<ExpenseModel>(
       isScrollControlled: true,
       showDragHandle: true,
       useSafeArea: true,
-      // context: Navigator.of(context, rootNavigator: true).context,
       context: context,
       builder: (ctx) => const NewExpenseSheet(),
     );
+  }
+
+  void _openAddExpenseOverlay() async {
+    final expense = await _showAddExpenseSheet();
     if (expense is ExpenseModel) {
       _addNewExpense(expense);
       log('Expenses View is Here: ${expense.toString()}');
@@ -74,15 +78,7 @@ class _ExpensesViewState extends State<ExpensesView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget mainContent = Center(
-      child: SizedBox(
-        width: 300,
-        child: Text(
-          textAlign: TextAlign.center,
-          S.of(context).ExpensesListIsEmpty,
-        ),
-      ),
-    );
+    Widget mainContent = const MainContentWid();
     if (_registeredExpenses.isNotEmpty) {
       mainContent = ExpensesViewBody(
         onDismissed: _removeExpense,
