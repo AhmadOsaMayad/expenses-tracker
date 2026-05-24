@@ -34,7 +34,11 @@ class Chart extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final primary = colorScheme.primary;
     final secondary = colorScheme.secondary;
-
+    final sortedBuckets = buckets.toList()
+      ..sort((a, b) => b.totalExpenses.compareTo(a.totalExpenses));
+    final nonEmptyBuckets = sortedBuckets
+        .where((bucket) => bucket.expenses.isNotEmpty)
+        .toList();
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -49,16 +53,19 @@ class Chart extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  for (final bucket in buckets)
+                  for (final bucket in nonEmptyBuckets)
                     ChartBar(fill: _chartBarFill(bucket)),
                 ],
               ),
             ),
             const SizedBox(height: 12),
             Row(
-              children: buckets
+              // mainAxisAlignment: MainAxisAlignment.end,
+              children: nonEmptyBuckets
                   .map(
-                    (bucket) => SizedBox(
+                    (bucket)
+                    // if (bucket.expenses.isNotEmpty) {
+                    => SizedBox(
                       width: 40,
                       child: ChartButton(
                         iconData: bucket.category.icon,
@@ -66,6 +73,7 @@ class Chart extends StatelessWidget {
                         primary: primary,
                       ),
                     ),
+                    // }
                   )
                   .toList(),
             ),
@@ -81,20 +89,17 @@ class Chart extends StatelessWidget {
     return bucket.totalExpenses / max;
   }
 
-  BoxDecoration _chartBox(Color color) {
-    return BoxDecoration(
-      borderRadius: BorderRadius.circular(8),
-      gradient: LinearGradient(
-        colors: [color.withAlpha(77), color.withAlpha(255)],
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
-      ),
-    );
-  }
+  BoxDecoration _chartBox(Color color) => BoxDecoration(
+    borderRadius: BorderRadius.circular(8),
+    gradient: LinearGradient(
+      colors: [color.withAlpha(77), color.withAlpha(255)],
+      begin: Alignment.bottomCenter,
+      end: Alignment.topCenter,
+    ),
+  );
 }
 
-List<ExpenseBucketModel> _getBucketList(List<ExpenseModel> expenses) {
-  return Category.values
-      .map((category) => ExpenseBucketModel.forCategory(expenses, category))
-      .toList();
-}
+List<ExpenseBucketModel> _getBucketList(List<ExpenseModel> expenses) => Category
+    .values
+    .map((category) => ExpenseBucketModel.forCategory(expenses, category))
+    .toList();
